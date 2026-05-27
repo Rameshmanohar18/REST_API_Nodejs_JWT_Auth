@@ -8,6 +8,12 @@ import {
 
 const router = express.Router();
 
+
+const validationMiddleware = require('../middleware/validationMiddleware')
+
+const {registerValidation, loginValidation} = require('../validations//authValidation')
+
+
 router.post('/register', register);
 router.post('/login', login);
 router.post('/refresh-token', refreshToken);

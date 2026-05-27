@@ -1,3 +1,116 @@
+```js
+
+20. Dockerfile
+    FROM node:20
+
+WORKDIR /app
+
+COPY package\*.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 5000
+
+CMD ["npm", "start"]
+
+
+
+21. docker-compose.yml
+version: '3'
+
+services:
+app:
+build: .
+ports: - '5000:5000'
+depends_on: - mongo - redis
+
+mongo:
+image: mongo
+ports: - '27017:27017'
+
+redis:
+image: redis
+ports: - '6379:6379' 22. Jest Test Example
+src/tests/auth.test.js
+const request = require('supertest');
+const app = require('../app');
+
+describe('Auth API', () => {
+test('Register User', async () => {
+const response = await request(app)
+.post('/api/v1/auth/register')
+.send({
+name: 'Ramesh',
+email: 'ramesh@gmail.com',
+password: '123456'
+});
+
+    expect(response.statusCode).toBe(201);
+
+});
+});
+
+ 23. API Versioning
+/api/v1/users
+/api/v2/users
+
+This helps:
+
+backward compatibility
+enterprise upgrades
+safe migrations
+
+
+
+
+
+24. Production Improvements
+Add Later
+Refresh token rotation
+Redis session store
+Kafka event streaming
+Queue system using BullMQ
+Structured logging using Winston
+Kubernetes deployment
+CI/CD pipelines
+Microservices split
+OpenTelemetry monitoring
+
+
+
+
+
+
+
+25. Common Interview Questions
+Why Refresh Tokens?
+
+Access tokens expire quickly. Refresh tokens generate new access tokens securely.
+
+Why Redis Blacklist?
+
+JWT is stateless. Redis helps invalidate tokens after logout.
+
+Why Soft Delete?
+
+Production systems avoid hard delete for:
+
+recovery
+auditing
+compliance
+Why Audit Logs?
+
+Tracks:
+
+who changed what
+security incidents
+admin activity
+Why API Versioning?
+
+Prevents frontend apps from breaking during upgrades.
+
 29. AWS EC2 Deployment Steps
 
 # SSH into server
@@ -155,3 +268,4 @@ Environment variables setup
 Production checklist
 
 This is now much closer to a real-world backend architecture used in product companies and scalable SaaS systems.
+```

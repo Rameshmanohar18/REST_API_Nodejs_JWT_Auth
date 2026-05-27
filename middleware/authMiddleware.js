@@ -4,13 +4,19 @@ const redis = require('../config/redis');
 module.exports = async (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
 
-  if (!token) {
-    return res.status(401).json({
+  if (!token) {      
+    return res.status(401).json({       
       message: 'Unauthorized'
     });
   }
 
-  const blacklisted = await redis.get(token);
+  let blacklisted = false;
+
+  try {
+    blacklisted = await redis.get(token);
+  } catch (error) {
+    console.warn(`Redis blacklist check skipped: ${error.message}`);
+  }
 
   if (blacklisted) {
     return res.status(401).json({

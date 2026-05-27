@@ -1,6 +1,6 @@
-const User = require('../models/User');
+import User from '../models/user.js';
 
-exports.createUser = async (req, res) => {
+export const createUser = async (req, res) => {
   const user = await User.create(req.body);
 
   res.status(201).json({
@@ -9,7 +9,7 @@ exports.createUser = async (req, res) => {
   });
 };
 
-exports.getUsers = async (req, res) => {
+export const getUsers = async (req, res) => {
   const page = Number(req.query.page) || 1;
   const limit = Number(req.query.limit) || 10;
 
@@ -23,7 +23,7 @@ exports.getUsers = async (req, res) => {
   });
 };
 
-exports.getUserById = async (req, res) => {
+export const getUserById = async (req, res) => {
   const user = await User.findById(req.params.id);
 
   if (!user || user.isDeleted) {
@@ -39,7 +39,7 @@ exports.getUserById = async (req, res) => {
   });
 };
 
-exports.updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   const user = await User.findByIdAndUpdate(
     req.params.id,
     req.body,
@@ -54,7 +54,7 @@ exports.updateUser = async (req, res) => {
   });
 };
 
-exports.deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   await User.findByIdAndUpdate(req.params.id, {
     isDeleted: true
   });

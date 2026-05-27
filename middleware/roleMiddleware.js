@@ -1,4 +1,4 @@
-module.exports = (...roles) => {
+const roleMiddleware = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       return res.status(403).json({
@@ -9,3 +9,5 @@ module.exports = (...roles) => {
     next();
   };
 };
+
+export default roleMiddleware;

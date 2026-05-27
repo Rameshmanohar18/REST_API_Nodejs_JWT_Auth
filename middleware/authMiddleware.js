@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken');
-const redis = require('../config/redis');
+import jwt from 'jsonwebtoken';
+import redis from '../config/redis.js';
 
-module.exports = async (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {      
@@ -36,3 +36,5 @@ module.exports = async (req, res, next) => {
     });
   }
 };
+
+export default authMiddleware;

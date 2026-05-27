@@ -1,6 +1,6 @@
-const AuditLog = require('../models/AuditLog');
+import AuditLog from '../models/auditLog.js';
 
-module.exports = async (req, res, next) => {
+const auditMiddleware = async (req, res, next) => {
   await AuditLog.create({
     userId: req.user?.id,
     action: 'API_CALL',
@@ -10,3 +10,5 @@ module.exports = async (req, res, next) => {
 
   next();
 };
+
+export default auditMiddleware;

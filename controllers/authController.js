@@ -1,14 +1,14 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-const redis = require('../config/redis');
-const User = require('../models/User');
-const {
+import redis from '../config/redis.js';
+import User from '../models/user.js';
+import {
   generateAccessToken,
   generateRefreshToken
-} = require('../utils/generateToken');
+} from '../utils/generateToken.js';
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   const { name, email, password, role } = req.body;
 
   const existingUser = await User.findOne({ email });
@@ -45,7 +45,7 @@ exports.register = async (req, res) => {
   });
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email, isDeleted: false }).select('+password');
@@ -76,7 +76,7 @@ exports.login = async (req, res) => {
   });
 };
 
-exports.refreshToken = async (req, res) => {
+export const refreshToken = async (req, res) => {
   const { refreshToken } = req.body;
 
   if (!refreshToken) {
@@ -111,7 +111,7 @@ exports.refreshToken = async (req, res) => {
   }
 };
 
-exports.logout = async (req, res) => {
+export const logout = async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {

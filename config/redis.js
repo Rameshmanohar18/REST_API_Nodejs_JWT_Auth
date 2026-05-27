@@ -1,4 +1,4 @@
-const Redis = require('ioredis');
+import Redis from 'ioredis';
 
 let hasLoggedConnectionError = false;
 
@@ -25,4 +25,4 @@ redis.on('error', (error) => {
   console.warn('Start Redis on localhost:6379, or disable logout token blacklisting while developing.');
 });
 
-module.exports = redis;
+export default redis;

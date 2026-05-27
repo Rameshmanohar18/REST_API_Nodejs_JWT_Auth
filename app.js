@@ -1,14 +1,18 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./config/swagger');
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import rateLimit from 'express-rate-limit';
+import swaggerUi from 'swagger-ui-express';
+import dotenv from 'dotenv';
 
-require('dotenv').config();
+import swaggerSpec from './config/swagger.js';
+import connectDB from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import errorMiddleware from './middleware/errorMiddleware.js';
 
-const connectDB = require('./config/db');
+dotenv.config();
 
 connectDB();
 
@@ -28,9 +32,9 @@ app.use(limiter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/api/v1/auth', require('./routes/authRoutes'));
-app.use('/api/v1/users', require('./routes/userRoutes'));
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/users', userRoutes);
 
-app.use(require('./middleware/errorMiddleware'));
+app.use(errorMiddleware);
 
-module.exports = app;
+export default app;

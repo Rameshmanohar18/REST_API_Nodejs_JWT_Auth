@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const auditSchema = new mongoose.Schema(
   {
@@ -12,4 +12,4 @@ const auditSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('AuditLog', auditSchema);
+export default mongoose.model('AuditLog', auditSchema);
